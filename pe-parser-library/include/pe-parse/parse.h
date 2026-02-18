@@ -25,6 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include <cstdint>
+#include <functional>
 #include <map>
 #include <string>
 
@@ -256,11 +257,11 @@ typedef int (*iterExpFull)(void *,
 void IterExpFull(parsed_pe *pe, iterExpFull cb, void *cbd);
 
 // iterate over sections
-typedef int (*iterSec)(void *,
-                       const VA &,
-                       const std::string &,
-                       const image_section_header &,
-                       const bounded_buffer *);
+using iterSec = std::function<int(void *,
+                              const VA &,
+                              const std::string &,
+                              const image_section_header &,
+                              const bounded_buffer *)>;
 void IterSec(parsed_pe *pe, iterSec cb, void *cbd);
 
 // get byte at VA in PE
